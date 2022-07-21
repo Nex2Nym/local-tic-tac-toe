@@ -42,9 +42,9 @@ import GameBoardComponent from '@/components/GameBoardComponent.vue'
 export default {
   data(){
     return{
-      msg: "",
-      winnerDialog: true,
-      winnerMsg: "It's Player 1's Turn!"
+      msg: "It's Player 1's Turn!",
+      winnerDialog: false,
+      winnerMsg: ""
     }
   },
 
@@ -81,6 +81,7 @@ export default {
       } else if (this.turn != this.role && this.role != ""){
         this.msg += " Now it's your opponent's turn"
       }*/
+      this.$forceUpdate();
     },
     reset(){
         this.winnerDialog = false
