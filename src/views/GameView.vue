@@ -2,14 +2,17 @@
     <v-container elevation="0">
       <v-row>
         <v-col cols="1" md="3"></v-col>
-        <v-col class="text-center" cols="8" md="5" style="font-size: 2.4rem;">
-            {{msg}}
+        <v-col class="text-end" cols="3" md="2" style="font-size: 2.7rem;">
+            It's 
         </v-col>
         <v-col class="justify-center align-center" cols="2" md="1" v-if="turn == 'P1'">
           <v-img contain src="@/assets/X.png" max-height="50"> </v-img>
         </v-col>
         <v-col class="justify-center align-center" cols="2" md="1" v-if="turn == 'P2'">
           <v-img contain src="@/assets/O.png" max-height="50"> </v-img>
+        </v-col>
+        <v-col class="text-start" cols="3" md="2" style="font-size: 2.7rem;"> 
+          's turn
         </v-col>
         <v-col cols="1" md="3"></v-col>
       </v-row>
