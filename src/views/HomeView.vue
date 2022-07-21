@@ -37,29 +37,14 @@ export default {
   computed: {
     ...mapGetters({
       darkTheme: 'settings/getTheme',
-      areTwoActivePlayers: 'gameBoard/areTwoActivePlayers',
-      isP1Active: 'gameBoard/isP1Active',
-      isP2Active: 'gameBoard/isP2Active'
     }),
   },
 
   methods: {
     ...mapActions({
       switchTheme: 'settings/switchTheme',
-      pickRole: 'settings/pickRole',
-      switchP1: 'gameBoard/switchP1',
-      switchP2: 'gameBoard/switchP2'
     }),
     enterGame(role){
-      if(role == 'P') {
-        if(!this.isP1Active){
-          this.pickRole('P1')
-          this.switchP1()
-        } else if (!this.isP2Active){
-          this.pickRole('P2')
-          this.switchP2()
-        }
-      }
       this.$router.replace('/game')
     }
   },

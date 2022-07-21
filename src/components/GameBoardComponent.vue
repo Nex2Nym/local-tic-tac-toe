@@ -97,6 +97,18 @@
         </v-card>
       </v-col>
     </v-row>
+     <v-dialog max-width="340" transition="dialog-top-transition" v-model="winnerDialog">
+        <v-card class="justify-center" height="130" style="font-size: 1.6rem;">
+          <v-row class="ma-0 pa-0 justify-center align-center">
+            <v-col cols="10" class="d-flex justify-center align-center">
+                {{winnerMsg}}
+            </v-col>
+            <v-col cols="10" class="d-flex justify-center align-center">
+                <v-btn block class="ma-0 pa-0" plain style="font-size: 1.2rem;" :color="darkTheme ? 'secondary' : 'primary'" @click="reset"> Restart </v-btn>
+            </v-col>
+          </v-row>
+        </v-card>
+      </v-dialog>
   </v-card>
 </template>
 
@@ -104,6 +116,15 @@
   import { mapActions, mapGetters } from 'vuex'
 
   export default {
+    created(){
+      this.resetGame()
+    },
+    data(){
+      return{
+        winnerDialog: false,
+        winnerMsg: ""
+      }
+    },
     computed: {
       ...mapGetters({
         darkTheme: 'settings/getTheme',
@@ -111,13 +132,21 @@
         currentTurn: 'gameBoard/getCurrentTurn',
         winner: 'gameBoard/getWinner'
       }),
+    },
+    methods: {
+      ...mapActions({
+        addMove: 'gameBoard/addMove',
+        nextTurn: 'gameBoard/nextTurn',
+        selectWinner: 'gameBoard/selectWinner',
+        resetGame: 'gameBoard/resetGame'
+      }),
 
       boardChecker(){
         if(this.board[0] == this.board[1] && this.board[0] == this.board[2]){
           if(this.board[0] == 'X'){
             this.selectWinner('P1')
             this.nextTurn('')
-          } else{
+          } else if(this.board[0] == 'O'){
             this.selectWinner('P2')
             this.nextTurn('')
           }
@@ -125,7 +154,7 @@
           if(this.board[3] == 'X'){
             this.selectWinner('P1')
             this.nextTurn('')
-          } else{
+          } else if(this.board[3] == 'O'){
             this.selectWinner('P2')
             this.nextTurn('')
           }
@@ -133,7 +162,7 @@
           if(this.board[6] == 'X'){
             this.selectWinner('P1')
             this.nextTurn('')
-          } else{
+          } else if(this.board[6] == 'O'){
             this.selectWinner('P2')
             this.nextTurn('')
           }
@@ -141,7 +170,7 @@
           if(this.board[0] == 'X'){
             this.selectWinner('P1')
             this.nextTurn('')
-          } else{
+          } else if(this.board[0] == 'O'){
             this.selectWinner('P2')
             this.nextTurn('')
           }
@@ -149,7 +178,7 @@
           if(this.board[1] == 'X'){
             this.selectWinner('P1')
             this.nextTurn('')
-          } else{
+          } else if(this.board[1] == 'O'){
             this.selectWinner('P2')
             this.nextTurn('')
           }
@@ -157,7 +186,7 @@
           if(this.board[2] == 'X'){
             this.selectWinner('P1')
             this.nextTurn('')
-          } else{
+          } else if(this.board[2] == 'O'){
             this.selectWinner('P2')
             this.nextTurn('')
           }
@@ -165,7 +194,7 @@
           if(this.board[0] == 'X'){
             this.selectWinner('P1')
             this.nextTurn('')
-          } else{
+          } else if(this.board[0] == 'O'){
             this.selectWinner('P2')
             this.nextTurn('')
           }
@@ -173,7 +202,7 @@
           if(this.board[2] == 'X'){
             this.selectWinner('P1')
             this.nextTurn('')
-          } else{
+          } else if(this.board[2] == 'O'){
             this.selectWinner('P2')
             this.nextTurn('')
           }
@@ -181,14 +210,10 @@
             this.selectWinner('tie')
             this.nextTurn('')
         }
-      }
-    },
-    methods: {
-      ...mapActions({
-        addMove: 'gameBoard/addMove',
-        nextTurn: 'gameBoard/nextTurn',
-        selectWinner: 'gameBoard/selectWinner'
-      }),
+        this.$forceUpdate()
+        this.winnerCheck()
+      },
+
       newMove(index){
         let move = {
             id: 10,
@@ -207,8 +232,19 @@
           this.addMove(move)
           this.nextTurn('P1')
         }
-        this.$forceUpdate();
+        this.boardChecker()
+        this.$forceUpdate()
       },
+
+      reset(){
+        this.$router.go()
+      },
+      winnerCheck(){
+          if (this.winner != ''){
+              this.winnerMsg = this.winner == 'P1' ? 'Our winner is Player 1!' : this.winner == 'P2' ? 'Our winner is Player 2!' : "It's a tie!"
+              this.winnerDialog = true
+          }
+      }
     },
 
     watch:{

@@ -8,14 +8,6 @@ export const gameBoard = {
         CurrentTurn: 'P1',
         Game: ['', '', '', '', '', '', '', '', ''],
         Winner: ''
-        /*
-            ID: integer
-            P1: boolean
-            P2: boolean
-            CurrentTurn: string ('P1' | 'P2' | '')
-            Game: array[9] ('x' | 'o' | '')
-            Winner: string ('P1' | 'P2' | 'Tie' | '')
-        */
     },
 
     getters: {
@@ -61,7 +53,7 @@ export const gameBoard = {
         reset(state){
             state.CurrentTurn = 'P1',
             state.Game= ['', '', '', '', '', '', '', '', ''],
-            state.Winner= ''
+            state.Winner= ""
         }
     },
 
